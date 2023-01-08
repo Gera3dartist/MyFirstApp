@@ -4,9 +4,20 @@
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
+    <string name="third_fragment_label">Third Fragment</string>
+    <string name="first_go_to_second">Go to Second</string>
+    <string name="first_go_to_third">Go to Third</string>
+    <string name="second_go_to_third">Go to Third</string>
+    <string name="second_go_to_first">Go to First</string>
+    <string name="third_go_to_first">Go to First</string>
+    <string name="third_go_to_second">Go to Second</string>
+
+
     <string name="previous">Previous</string>
 
     <string name="hello_world">Hello World</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="third_fragment">Hello third fragment</string>
+    <string name="third_next">go to first</string>
 </resources>

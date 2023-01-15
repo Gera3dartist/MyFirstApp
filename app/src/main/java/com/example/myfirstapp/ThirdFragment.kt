@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myfirstapp.databinding.FragmentThirdBinding
 
 /**
  * A simple [Fragment] subclass as the third destination in the navigation.
  */
 class ThirdFragment : Fragment() {
+    private lateinit var adapter: RecyclerAdapter
+    private val foodItemsList: MutableList<ItemData> = mutableListOf()
 
     private var _binding: FragmentThirdBinding? = null
 
@@ -25,6 +29,8 @@ class ThirdFragment : Fragment() {
     ): View? {
 
         _binding = FragmentThirdBinding.inflate(inflater, container, false)
+        setUpAdapter()
+        populateList()
         return binding.root
 
     }
@@ -32,17 +38,36 @@ class ThirdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.thirdButtonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_thirdFragment_to_SecondFragment)
+        binding.thirdButtonAdd.setOnClickListener {
+//
+            foodItemsList.add(
+                ItemData(name = binding.thirdTextView.text.toString(), description = "default"))
+            binding.itemsRV.adapter?.notifyItemInserted(foodItemsList.size - 1)
+            binding.thirdTextView.setText("")
         }
-
-        binding.thirdButtonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_thirdFragment_to_FirstFragment)
-        }
+//
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setUpAdapter() {
+        adapter = RecyclerAdapter(binding.root.context, foodItemsList)
+
+        binding.itemsRV.adapter = adapter
+        binding.itemsRV.layoutManager = LinearLayoutManager(binding.root.context)
+    }
+
+    private fun populateList() {
+        for (i in 1..2){
+            val name = "Food Item $i"
+            val description = "Description $i"
+
+            val foodItem = ItemData(name = name, description = description)
+
+            foodItemsList.add(foodItem)
+        }
     }
 }

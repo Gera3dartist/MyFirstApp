@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myfirstapp.databinding.FragmentItemLayoutBinding
 
 
-class RecyclerAdapter(private val context: Context, private val foodItemList:MutableList<ItemData>)
+class RecyclerAdapter(private val context: Context, private val sensorItemList:MutableList<Sensor>)
     : RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder>() {
 
 
@@ -17,23 +17,23 @@ class RecyclerAdapter(private val context: Context, private val foodItemList:Mut
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val foodItem = foodItemList[position]
-        holder.bind(foodItem)
+        val sensorItem = sensorItemList[position]
+        holder.bind(sensorItem)
     }
 
     override fun getItemCount(): Int {
-        return foodItemList.size
+        return sensorItemList.size
     }
 
 
-    class ItemViewHolder(foodItemLayoutBinding: FragmentItemLayoutBinding)
-        : RecyclerView.ViewHolder(foodItemLayoutBinding.root){
+    class ItemViewHolder(sensorItemLayoutBinding: FragmentItemLayoutBinding)
+        : RecyclerView.ViewHolder(sensorItemLayoutBinding.root){
 
-        private val binding = foodItemLayoutBinding
+        private val binding = sensorItemLayoutBinding
 
-        fun bind(item: ItemData){
+        fun bind(item: Sensor){
             binding.itemName.text = item.name
-            binding.itemDescription.text = item.description
+            binding.itemValue.text = item.value.toString()
         }
 
     }

@@ -13,18 +13,18 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="#FFF"
-        android:text="Food Item 1"
+        android:text="Sensor name 1"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
-        android:id="@+id/itemDescription"
+        android:id="@+id/itemValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:text="some desc"
+        android:text="1"
         android:textColor="#FFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

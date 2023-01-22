@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myfirstapp.databinding.FragmentThirdBinding
 
 /**
@@ -15,9 +13,10 @@ import com.example.myfirstapp.databinding.FragmentThirdBinding
  */
 class ThirdFragment : Fragment() {
     private lateinit var adapter: RecyclerAdapter
-    private val foodItemsList: MutableList<ItemData> = mutableListOf()
+    private val sensorItemsList: MutableList<Sensor> = mutableListOf()
 
     private var _binding: FragmentThirdBinding? = null
+    private var dateBaseHelper: DbHandler? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -30,6 +29,8 @@ class ThirdFragment : Fragment() {
 
         _binding = FragmentThirdBinding.inflate(inflater, container, false)
         setUpAdapter()
+
+        dateBaseHelper = context?.let { DbHandler(it, null, null, 1) };
         populateList()
         return binding.root
 
@@ -39,13 +40,16 @@ class ThirdFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.thirdButtonAdd.setOnClickListener {
-//
-            foodItemsList.add(
-                ItemData(name = binding.thirdTextView.text.toString(), description = "default"))
-            binding.itemsRV.adapter?.notifyItemInserted(foodItemsList.size - 1)
+            val sensor = Sensor(
+                name=binding.thirdTextView.text.toString(),
+                value=binding.thirdTextView.text.toString().length
+            )
+
+            dateBaseHelper?.addSensor(sensor)
+            sensorItemsList.add(sensor)
+            binding.itemsRV.adapter?.notifyItemInserted(sensorItemsList.size - 1)
             binding.thirdTextView.setText("")
         }
-//
     }
 
     override fun onDestroyView() {
@@ -54,20 +58,24 @@ class ThirdFragment : Fragment() {
     }
 
     private fun setUpAdapter() {
-        adapter = RecyclerAdapter(binding.root.context, foodItemsList)
+        adapter = RecyclerAdapter(binding.root.context, sensorItemsList)
 
         binding.itemsRV.adapter = adapter
         binding.itemsRV.layoutManager = LinearLayoutManager(binding.root.context)
     }
 
     private fun populateList() {
+
         for (i in 1..2){
-            val name = "Food Item $i"
-            val description = "Description $i"
+            val sensor = Sensor(name="Sensor$i", value=i)
 
-            val foodItem = ItemData(name = name, description = description)
+            dateBaseHelper?.addSensor(sensor)
 
-            foodItemsList.add(foodItem)
+            sensorItemsList.add(sensor)
         }
+        val result = dateBaseHelper?.listSensors()
+        result?.let { sensorItemsList.addAll(it) }
+
     }
+
 }
